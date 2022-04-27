@@ -1,6 +1,7 @@
 # 1337_Philosophers
 
 https://hpc-tutorials.llnl.gov/posix/
+
 https://www.cs.dartmouth.edu/~campbell/cs50/threads.html
 
 • This project is to be coded in C, following the 42 Norm. Any leak, crash, undefined
