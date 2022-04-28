@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zchbani <zchbani@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:06:25 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/26 18:06:26 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/28 03:11:31 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,52 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct s_arguments
+typedef struct s_philo
 {
-    int             nb_of_philo;
-    int             time_to_die;
-    int             time_to_eat;
-    int             time_to_sleep;
-    int             nb_must_eat;
-    int             start_time;
+	pthread_t		thread_id;
+	int				id;
+	int				l_f;
+	int				r_f;
+	long long		check_die_time;
+	int				eat;
+	struct s_data	*data;
+}				t_philo;
 
-}   t_arguments;
-
-typedef struct s_philosophers
+typedef struct s_data
 {
-    int             id;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	eating;
+	pthread_mutex_t	print;
+	int				nbrofphilo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				time_each_philo_must_eat;
+	int				die;
+	int				check_eat;
+	long long		beginning_time;
+	t_philo			*philo;
+}				t_data;
 
-}   t_philosophers;
+/* philosophers.c FILE */
+void	    *routine(void *philo);
 
 /* utiles1.c FILE */
-int	ft_ispositive(int *s, int n);
-int	ft_atoi(const char *str);
-int	is_digits(char **argv, int c);
+long long	get_time(void);
+void	    print_message(t_data *data, char *string, int philo_id);
+void	    check_death(t_data *data, t_philo *philo);
+void	end(t_data *data, t_philo *philo);
 
 /* utiles2.c FILE */
-int ft_gettime(void);
+int	        ft_atoi(const char *str);
 
 /* threads.c FILE */
-void print_statut(t_philosophers *philo, char *moves);
+int	        creat_thread(t_data *data, t_philo *philo);
+
+/* Initialization FILE */
+int	        initialization(t_data *data, int ac, char **av);
 
 /* arguments.c FILE */
-int check_input(int argc, char **argv, t_arguments *args);
+int	        check_arguments(int argc, char **argv);
 
 #endif

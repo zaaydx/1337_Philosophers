@@ -3,10 +3,13 @@ NAME			= philo
 
 CC 				= gcc
 
-SRCS			= philosophers.c \
-				  arguments.c \
-				  utiles1.c \
-				  utiles2.c \
+SRCS			= 	main.c \
+					philosophers.c \
+				  	arguments.c \
+					threads.c \
+				  	utiles1.c \
+				  	utiles2.c \
+				  	Initialization.c \
 
 OBJS			= $(SRCS:.c=.o)
 
