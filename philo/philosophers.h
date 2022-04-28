@@ -6,7 +6,7 @@
 /*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:06:25 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/28 03:11:31 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/28 21:20:46 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ void	end(t_data *data, t_philo *philo);
 
 /* utiles2.c FILE */
 int	        ft_atoi(const char *str);
+void		ft_putstr_fd(char *s, int fd);
+void		ft_putnbr_fd(int n, int fd);
+void		ft_putchar_fd(char c, int fd);
 
 /* threads.c FILE */
 int	        creat_thread(t_data *data, t_philo *philo);

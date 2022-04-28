@@ -6,7 +6,7 @@
 /*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 03:02:34 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/28 20:50:17 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/28 21:24:14 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_usleep(int time_limit, t_data *data)
 void	start_eat(t_data *data, t_philo *philo)
 {
 	pthread_mutex_lock(&(data->eating));
-	print_message(data, "is eating🍝", philo->id);
+	print_message(data, "is eating 🍝", philo->id);
 	philo->check_die_time = get_time();
 	pthread_mutex_unlock(&(data->eating));
 	(philo->eat)++;
@@ -38,9 +38,9 @@ void	start_eat(t_data *data, t_philo *philo)
 int	taking_fork(t_data *data, t_philo *philo)
 {
 	pthread_mutex_lock(&(data->forks[philo->l_f]));
-	print_message(data, "has taken a fork🍴", philo->id);
+	print_message(data, "has taken a fork 🍴", philo->id);
 	pthread_mutex_lock(&(data->forks[philo->r_f]));
-	print_message(data, "has taken a fork🍴", philo->id);
+	print_message(data, "has taken a fork 🍴", philo->id);
 	start_eat(philo->data, philo);
 	pthread_mutex_unlock(&(data->forks[philo->l_f]));
 	pthread_mutex_unlock(&(data->forks[philo->r_f]));
@@ -58,7 +58,7 @@ void	*routine(void *philo)
 	data = copy_of_philo->data;
 	if (data->nbrofphilo == 1)
 	{
-		print_message(data, "has taken a fork", copy_of_philo->id);
+		print_message(data, "has taken a fork 🍴", copy_of_philo->id);
 		ft_usleep(data->time_to_die, data);
 		return (NULL);
 	}
@@ -68,9 +68,9 @@ void	*routine(void *philo)
 	{
 		if (taking_fork(data, copy_of_philo))
 			break ;
-		print_message(data, "is sleeping💤", copy_of_philo->id);
+		print_message(data, "is sleeping 💤", copy_of_philo->id);
 		ft_usleep(data->time_to_sleep, data);
-		print_message(data, "is  thinking", copy_of_philo->id);
+		print_message(data, "is thinking", copy_of_philo->id);
 	}
 	return (NULL);
 }

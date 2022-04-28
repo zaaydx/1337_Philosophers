@@ -6,7 +6,7 @@
 /*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:06:36 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/28 20:53:45 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/28 21:25:42 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ void	print_message(t_data *data, char *string, int philo_id)
 	pthread_mutex_lock(&(data->print));
 	if (!(data->die))
 	{
-		printf("%lld", get_time() - data->beginning_time);
-		printf("%d ", philo_id + 1);
-		printf("%s\n", string);
+		ft_putnbr_fd(get_time() - data->beginning_time, 1);
+		ft_putchar_fd('\t', 1);
+		ft_putnbr_fd((philo_id + 1), 1);
+		ft_putchar_fd('\t', 1);
+		ft_putstr_fd(string, 1);
+		ft_putchar_fd('\n', 1);
 	}
 	pthread_mutex_unlock(&(data->print));
 }
@@ -56,7 +59,7 @@ void	check_death(t_data *data, t_philo *philo)
 			pthread_mutex_lock(&(data->eating));
 			if ((get_time() - philo[index].check_die_time) > data->time_to_die)
 			{
-				print_message(data, "died", index);
+				print_message(data, "\e[0;31mdied\e[0;37m", index);
 				data->die = 1;
 			}
 			pthread_mutex_unlock(&(data->eating));
