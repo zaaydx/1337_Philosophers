@@ -3,86 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   utiles1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zchbani <zchbani@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:06:36 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/26 18:06:37 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/28 20:53:45 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_ispositive(int *s, int n)
+long long	get_time(void)
 {
-	int	i;
+	struct timeval	time;
 
-	i = 0;
-	while (i < n)
-	{
-		if (s[i] < 0)
-			return (0);
-		i++;
-	}
-	return (1);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-static int	check_digit(char *s)
+void	print_message(t_data *data, char *string, int philo_id)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
+	pthread_mutex_lock(&(data->print));
+	if (!(data->die))
 	{
-		if ((s[i] > '9' || s[i] < '0') && s[0] != '-' && s[0] != '+')
-			return (0);
-		i++;
+		printf("%lld", get_time() - data->beginning_time);
+		printf("%d ", philo_id + 1);
+		printf("%s\n", string);
 	}
-	return (1);
+	pthread_mutex_unlock(&(data->print));
 }
 
-int	is_digits(char **argv, int c)
+void	check_eat(t_data *data, t_philo *philo)
 {
-	int	i;
+	int	index;
 
-	i = 1;
-	while (i < c)
-	{
-		if (!check_digit(argv[i]))
-			return (0);
-		i++;
-	}
-	return (1);
+	index = 0;
+	while (data->time_each_philo_must_eat != 0 && index < data->nbrofphilo
+		&& philo[index].eat > data->time_each_philo_must_eat)
+		index++;
+	if (index == data->nbrofphilo)
+		data->check_eat = 1;
 }
 
-static int	ft_isspace(int c)
+void	check_death(t_data *data, t_philo *philo)
 {
-	return ((c > 8 && c < 14) || c == 32);
-}
+	int		index;
 
-int	ft_atoi(const char *str)
-{
-	int		i;
-	int		sig;
-	int		r;
-
-	r = 0;
-	i = 0;
-	sig = 1;
-	while (str[i] && ft_isspace(str[i]))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+	while (!(data->check_eat))
 	{
-		if (str[i] == '-')
-			sig = -1;
-		i++;
-	}
-	while (str[i])
-	{
-		if (str[i] >= 48 && str[i] <= 57)
-			r = (r * 10) + (str[i] - 48);
-		else
+		index = 0;
+		while ((index < data->nbrofphilo) && (!(data->die)))
+		{
+			pthread_mutex_lock(&(data->eating));
+			if ((get_time() - philo[index].check_die_time) > data->time_to_die)
+			{
+				print_message(data, "died", index);
+				data->die = 1;
+			}
+			pthread_mutex_unlock(&(data->eating));
+			index++;
+		}
+		if (data->die)
 			break ;
-		i++;
+		if (data->time_each_philo_must_eat > 0)
+			check_eat(data, data->philo);
+		usleep(1000);
 	}
-	return (r * sig);
+}
+
+void	end(t_data *data, t_philo *philo)
+{
+	int	index;
+
+	index = 0;
+	while (index < data->nbrofphilo)
+		pthread_join(philo[index++].thread_id, NULL);
+	index = 0;
+	while (index < data->nbrofphilo)
+		pthread_mutex_destroy(&(data->forks[index++]));
+	pthread_mutex_destroy(&(data->eating));
+	pthread_mutex_destroy(&(data->print));
+	free(data->philo);
+	free(data->forks);
 }
