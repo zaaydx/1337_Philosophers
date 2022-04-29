@@ -6,7 +6,7 @@
 /*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 03:01:52 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/28 03:08:50 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/28 22:57:40 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	t_data	data;
 
 	if (check_arguments(argc, argv) == 1)
-		return (write(2, "Incorrect Arguments\n", 21), 1);
+		return (write(2, "incorrect arguments\n", 21), 1);
     if (initialization(&data, argc, argv) == 1)
 		return (1);
     if (creat_thread(&data, (&data)->philo) == 1)

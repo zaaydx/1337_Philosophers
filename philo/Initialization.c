@@ -6,7 +6,7 @@
 /*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 02:53:04 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/28 02:56:40 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/28 22:13:57 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,19 @@ int	ft_init_mutex(t_data *data)
 	return (0);
 }
 
-int	initialization(t_data *data, int ac, char **av)
+int	initialization(t_data *data, int argc, char **argv)
 {
-	data->nbrofphilo = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
+	data->nbrofphilo = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	data->beginning_time = 0;
 	data->die = 0;
 	data->check_eat = 0;
 	data->time_each_philo_must_eat = 0;
-	if (ac == 6)
-		data->time_each_philo_must_eat = ft_atoi(av[5]);
+	if (argc == 6)
+		data->time_each_philo_must_eat = ft_atoi(argv[5]);
 	if (ft_init_mutex(data) || ft_init_struct_philo(data))
-		return (write(2, "Initialization failed\n", 22), 1);
+		return (write(2, "initialization failed\n", 22), 1);
 	return (0);
 }
