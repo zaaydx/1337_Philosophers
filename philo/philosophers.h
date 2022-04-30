@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zchbani <zchbani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 18:06:25 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/28 21:45:08 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/30 05:47:28 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,27 @@ typedef struct s_data
 }				t_data;
 
 /* philosophers.c FILE */
-void	    *routine(void *philo);
+void		*routine(void *philo);
 
 /* utiles1.c FILE */
 long long	get_time(void);
-void	    print_message(t_data *data, char *string, int philo_id);
-void	    check_death(t_data *data, t_philo *philo);
-void	end(t_data *data, t_philo *philo);
+void		print_message(t_data *data, char *string, int philo_id);
+void		check_death(t_data *data, t_philo *philo);
+void		end(t_data *data, t_philo *philo);
 
 /* utiles2.c FILE */
-int	        ft_atoi(const char *str);
+int			ft_atoi(const char *str);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 void		ft_putchar_fd(char c, int fd);
 
 /* threads.c FILE */
-int	        creat_thread(t_data *data, t_philo *philo);
+int			creat_thread(t_data *data, t_philo *philo);
 
 /* Initialization FILE */
-int	        initialization(t_data *data, int ac, char **av);
+int			initialization(t_data *data, int ac, char **av);
 
 /* arguments.c FILE */
-int	        check_arguments(int argc, char **argv);
+int			check_arguments(int argc, char **argv);
 
 #endif

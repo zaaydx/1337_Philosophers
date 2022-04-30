@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zchbani <zchbani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zchbani <zchbani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 03:02:34 by zchbani           #+#    #+#             */
-/*   Updated: 2022/04/28 23:54:32 by zchbani          ###   ########.fr       */
+/*   Updated: 2022/04/30 05:45:22 by zchbani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void start_eat(t_data *data, t_philo *philo)
+void	start_eat(t_data *data, t_philo *philo)
 {
 	pthread_mutex_lock(&(data->eating));
-	print_message(data, "is eating\t\t🍝", philo->id);
+	print_message(data, "is eating 🍝", philo->id);
 	philo->check_die_time = get_time();
 	pthread_mutex_unlock(&(data->eating));
 	(philo->eat)++;
@@ -25,9 +25,9 @@ void start_eat(t_data *data, t_philo *philo)
 int	taking_fork(t_data *data, t_philo *philo)
 {
 	pthread_mutex_lock(&(data->forks[philo->l_f]));
-	print_message(data, "has taken a fork\t🍴", philo->id);
+	print_message(data, "has taken a fork 🍴", philo->id);
 	pthread_mutex_lock(&(data->forks[philo->r_f]));
-	print_message(data, "has taken a fork\t🍴", philo->id);
+	print_message(data, "has taken a fork 🍴", philo->id);
 	start_eat(philo->data, philo);
 	pthread_mutex_unlock(&(data->forks[philo->l_f]));
 	pthread_mutex_unlock(&(data->forks[philo->r_f]));
@@ -36,7 +36,7 @@ int	taking_fork(t_data *data, t_philo *philo)
 	return (0);
 }
 
-void *routine(void *philo)
+void	*routine(void *philo)
 {
 	t_philo	*copy_of_philo;
 	t_data	*data;
@@ -55,9 +55,9 @@ void *routine(void *philo)
 	{
 		if (taking_fork(data, copy_of_philo))
 			break ;
-		print_message(data, "is sleeping\t\t💤", copy_of_philo->id);
+		print_message(data, "is sleeping 💤", copy_of_philo->id);
 		usleep(data->time_to_sleep * 1000);
-		print_message(data, "is thinking\t\t🤔", copy_of_philo->id);
+		print_message(data, "is thinking 🤔", copy_of_philo->id);
 	}
 	return (NULL);
 }
